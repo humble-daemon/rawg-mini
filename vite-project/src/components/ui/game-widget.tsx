@@ -1,12 +1,8 @@
 import {Game, Rating, ParentPlatform} from "@/services/game-services"
 import {  Card, Image} from "@chakra-ui/react"
-import { HStack, Stack } from "@chakra-ui/react"
-import {
-  Skeleton,
-  SkeletonText} from "./skeleton";
 
 interface Props{
-    game?: Game
+    game: Game
 }
 
 
@@ -19,15 +15,6 @@ const getPlatforms = (platforms : ParentPlatform[]) =>{
 }
 
 const GameWidget = ({game} : Props) => {
-    if(!game)
-        return (
-            <Stack gap="6" maxW="xs">
-              <Skeleton height="200px" />
-              <HStack width="full">
-                <SkeletonText noOfLines={2} />
-              </HStack>
-            </Stack>
-          )
     return (
         <Card.Root maxW="sm" overflow="hidden">
           <Image
