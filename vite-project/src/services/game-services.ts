@@ -29,25 +29,35 @@ export interface Games{
 
 
 
-class GameService{
-    
-    get(genres?:string){
-        if(!genres){
-            genres = "";
-            for(let i = 0; i < 100; i ++){
-                if(i === 99)genres+= i;
-                else genres += i + ","
-            }
-        }
-
-        const request =  ApiClient.get<Games>("/games", {
-            params : {
-                genres,
-            }
-        });
-        return {request, controller};
+class GameService {
+    get(genres: string, ordering: string, parent_platforms : string) {
+      // Don't build an unnecessary genres string; pass undefined if not provided
+      const request = ApiClient.get<Games>("/games", {
+        params: {
+          genres: genres || undefined, // Omit 'genres' from params if undefined
+          ordering : ordering || undefined,
+          parent_platforms : parent_platforms || undefined,
+          page_size : 10,
+        },
+        signal: controller.signal, // Add the signal to the request here
+      });
+  
+      return { request, controller };
     }
-}
 
-
-export default new GameService();
+    get_query(query : string){
+              // Don't build an unnecessary genres string; pass undefined if not provided
+      const request = ApiClient.get<Games>("/games", {
+        params: {
+          search : query || undefined,
+          page_size : 10,
+        },
+        signal: controller.signal, // Add the signal to the request here
+      });
+  
+      return { request, controller };
+    }
+  }
+  
+  export default new GameService();
+  

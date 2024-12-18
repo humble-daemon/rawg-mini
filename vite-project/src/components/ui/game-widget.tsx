@@ -7,6 +7,7 @@ interface Props{
 
 
 const getRating = (ratings : Rating[]) => {
+    if(!ratings[0])return "unrated";
     return ratings.reduce((acc, rating)=>{return rating.count > acc.count?rating:acc}, ratings[0]).title;
 }
 
@@ -22,7 +23,7 @@ const GameWidget = ({game} : Props) => {
           />
           <Card.Body gap="2">
             <Card.Description>
-              {getPlatforms(game.parent_platforms)}{" | "}{game.metacritic}
+              {getPlatforms(game.parent_platforms)}{" | "}{game.metacritic || "no metacritic"}
             </Card.Description>
             <Card.Title>{game.name}{" | "}{getRating(game.ratings)}</Card.Title>
 
